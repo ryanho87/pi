@@ -1,0 +1,53 @@
+#!/bin/bash
+HB=`pgrep -f homebridge` # List the PID of homebridge if it is running
+HA=`pgrep -f homeassistant` # List the PID of homeassistant if it is running
+
+### Check if the services are running, and if so, stop them ###
+
+echo "Is homebridge running?"
+sleep 1
+if [ -n "$HB" ] # Check if homebridge is running via pgrep
+  then
+    echo "Yes, running with PID " "$HB"
+    sleep 1
+    echo "Stopping homebridge..."
+    sleep 1
+    sudo systemctl stop homebridge.service # stop the service
+    while [ ! -z "$HB" ] # Loop to make sure homebridge is stopped before proceeding
+      do
+        echo "homebridge still running..."
+        sleep 1
+        HB=`pgrep -f homebridge`
+      done
+        echo "homebridge has been stopped"
+    else
+      echo "No, homebridge is stopped"
+    fi
+    sleep 2
+
+### Start Services ###
+
+  HB=`pgrep -f homebridge` # List the PID of homebridge if it is running
+  HA=`pgrep -f homeassistant` # List the PID of homeassistant if it is running
+
+    # Start homeassistant first so that the components will not disappear from homebridge
+  echo "Starting homeassistant..."
+    sudo systemctl start home-assistant@homeassistant.service # Start homeassistant
+    while [ -z "$HA" ]
+      do
+        echo "Waiting for homeassistant to start..."
+        HA=`pgrep -f homeassistant`
+      done
+        echo "homeassitant is running"
+
+sleep 5 # Wait until homeassistant is running before starting up homebridge
+
+  echo "Starting homebridge..."
+    sleep 1
+    sudo systemctl start homebridge.service #Start homebridge
+    while [ -z "$HB" ]
+      do
+        echo "Waiting for homebridge to start..."
+        HB=`pgrep -f homebridge`
+      done
+        echo "homebridge is running"
