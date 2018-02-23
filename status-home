@@ -1,0 +1,5 @@
+echo "homebridge status:"
+  sudo systemctl status homebridge.service | grep i Active
+  sleep 1
+echo "homeassistant status:"
+  sudo systemctl status home-assistant@homeassistant.service | grep i Active
