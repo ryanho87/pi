@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# change to python venv directory
+cd /srv/homeassistant
+pwd
+
+# enter venv
+source bin/activate
+
+# assume homeassitant user
+sudo su homeassistant
+
+#upgrade
+sudo python3 -m pip install --upgrade homeassistant
