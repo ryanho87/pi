@@ -9,3 +9,9 @@ Scripts to manage Home automation stuff running on my raspberry pi
 
 ### status-home ###
   This script will print the status of both homebridge and homeassistant to the console.  Status is determined from systemctl status.
+
+### Upgrade ###
+  Instructions for how to upgrade versions.  This script is currently non-functional, but lists out the commands to peform the upgrade
+  
+ ### Notes ###
+home-assistant@homeassistant.service and homebridge.service located at /etc/systemd/system control the automatic startup of services.  A dependency has been created for homebridge.service which causes it to start after home-assistant@homeassistant.service
